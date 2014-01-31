@@ -1,0 +1,30 @@
+Azure DanceOff
+
+ - man logger ind med sin facebook
+ - herefter er man en del af danse-rundkredsen
+ - alle står og danser i rundkreds
+ - én bliver udvalgt til at danse
+ - man skal selv acceptere
+ - når man er inde i "ringen" kan man styre nogle få moves
+ - de andre der danser omkring, kan klappe
+ - man danser i 10 sekunder, derefter vælges der en ny
+ 
+ 
+ 
+ --- 
+ 
+ mvc projekt + authentication
+ + facebook app
+ + find id, secret - put ind i løsning
+ + tilføj signalr
+ + ny folder "Hubs"
+ + 	- ny hub "DanceHub"
+ + i startup:	app.MapSignalR();
+ 
+ http://www.asp.net/signalr/overview/signalr-20/getting-started-with-signalr-20/tutorial-getting-started-with-signalr-20-and-mvc-5
+ 
+ 
+ http://cssdeck.com/labs/dancing-robot-with-reflection
+ 
+ 
+ http://jsfiddle.net/u5Lxc/

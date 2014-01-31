@@ -1,0 +1,26 @@
+﻿@using Microsoft.Owin.Security
+@model dynamic
+
+@{
+    ViewBag.Title = "Log in";
+}
+
+<h2>@ViewBag.Title.</h2>
+<div class="row">
+@{
+	var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes().ToArray();
+	if (loginProviders.Length > 0)
+	{
+		using (Html.BeginForm("External", "Login", new {ViewBag.ReturnUrl }))
+		{
+			@Html.AntiForgeryToken()
+	
+			foreach (AuthenticationDescription p in loginProviders)
+			{
+				<button type="submit" class="btn btn-default" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account">@p.AuthenticationType</button>
+			}
+		}
+	}
+}
+
+</div>

@@ -1,0 +1,149 @@
+/**
+ * Move in a circle without wrapper elements
+ * Idea by Aryeh Gregor, simplified by Lea Verou
+ */
+
+.circle { 
+    -webkit-border-radius: 500px;
+    border: 5px solid red;
+	position: absolute;
+	top: 0;
+	left: 210px;
+    width: 420px;
+    height: 420px;
+    z-index: -1;
+    
+    -webkit-animation: circle-run 30s infinite;
+    -webkit-animation-timing-function:linear;
+}
+
+@-webkit-keyframes circle-run 
+{
+    0%{
+        -webkit-transform:rotate(0deg);
+    }
+    100% 
+    {
+        -webkit-transform:rotate(360deg);
+    }
+}
+
+@-webkit-keyframes rotateProfile {
+	from {
+		-webkit-transform: rotate(0deg)
+		           translate(-200px)
+		           rotate(0deg);
+	}
+	to {
+		-webkit-transform: rotate(360deg)
+		           translate(-200px) 
+		           rotate(-360deg);
+	}
+}
+
+.profile {
+	position: absolute;
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+	top: 200px;
+	left: 50%;
+	margin: -20px;
+	-webkit-animation: 
+        pulse 0.5s infinite,
+        rotateProfile 20s infinite linear;
+    border: 1px solid red;
+    background-color: #ffffff;
+    -webkit-border-radius: 100px;
+}
+
+.center {
+    position: absolute;
+    top: 125px;
+    left: 340px;
+    width: 180px;
+    height: 180px;
+    overflow: hidden;
+    -webkit-border-radius: 180px;
+    border: 5px solid red;
+}
+
+.fadeIn {
+    -webkit-animation: 
+        pulse 0.5s infinite,
+        fadeIn 1.5s ease-in-out,
+        rotator 1s infinite linear;
+}
+
+.rotator {
+    -webkit-animation: 
+        pulse 0.5s infinite,
+        rotator 1s infinite linear;    
+}
+
+.jump {
+    -webkit-animation: 
+        pulse 0.2s infinite,
+        jump 0.5s infinite linear;    
+}
+
+@-webkit-keyframes rotator 
+{
+    0%{
+        -webkit-transform:rotate(0deg);
+    }
+    25%{
+        -webkit-transform:rotate(10deg);
+    }
+    50%{
+        -webkit-transform:rotate(0deg);
+    }
+    75%{
+        -webkit-transform:rotate(-10deg);
+    }    
+}
+
+@-webkit-keyframes jump {
+    0%{
+        margin-top: 0;
+    }
+    25%{
+        margin-top: -10px;
+    }
+    50%{
+        margin-top: 0
+    }
+    75%{
+        margin-top: 10px;
+    }      
+}
+
+@-webkit-keyframes pulse {
+	0% {
+		opacity: 0.9;		
+	}
+	50% {
+		opacity: 1;	
+	}	
+	100% {
+		opacity: 0.9;	
+	}			
+}
+
+@-webkit-keyframes fadeIn {
+	0% {
+		-webkit-transform: scale(0);
+		opacity: 0.0;		
+	}
+	60% {
+		-webkit-transform: scale(1.1);
+	}
+	80% {
+		-webkit-transform: scale(0.9);
+		opacity: 1;	
+	}	
+	100% {
+		-webkit-transform: scale(1);
+		opacity: 1;	
+	}		
+}

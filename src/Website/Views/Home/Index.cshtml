@@ -1,0 +1,20 @@
+﻿@{
+    ViewBag.Title = "Start chatting";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div data-ng-controller="TestController as test" class="ng-cloak">
+
+	<form data-ng-submit="test.send($event)">
+		<input type="text" data-ng-model="test.value" />
+		<button type="submit">Send</button>
+	</form>
+
+	<ul>
+		<li data-ng-repeat="item in test.model">
+			<img data-ng-src="http://graph.facebook.com/{{item.profileId}}/picture"/> {{item.message}}
+		</li>
+	</ul>
+
+</div>
