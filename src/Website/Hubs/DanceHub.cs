@@ -110,7 +110,6 @@ namespace Website.Hubs
 		{
 			Id = id;
 			_connections = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-			Pulse();
 		}
 
 		public string Id { get; private set; }
@@ -118,7 +117,6 @@ namespace Website.Hubs
 
 		public void Connect(string connectionId)
 		{
-			Pulse();
 			_connections.Add(connectionId);
 		}
 
@@ -134,19 +132,12 @@ namespace Website.Hubs
 
 		public bool IsAlive()
 		{
-			return _connections.Count > 0; // todo: add _lastPulse
+			return _connections.Count > 0;
 		}
 
 		public void Update(Dancer dancer)
 		{
 			Status = dancer.Status;
-
-			Pulse();
-		}
-
-		private void Pulse()
-		{
-			_lastPulse = DateTimeOffset.UtcNow;
 		}
 	}
 }
