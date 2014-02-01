@@ -1,33 +1,46 @@
 ﻿angular
-.module("app", ["ngAnimate"])
-.controller("TestController", ["$scope", function ($scope) {
+	.module("app", ["ngAnimate"])
 
-	var test = this;
-	test.model = [];
+	.controller("DancerController", ["$scope", function($scope) {
 
-	// Declare a proxy to reference the hub. 
-	var chat = $.connection.chatHub;
+		var viewModel = this;
 
-	// Create a function that the hub can call to broadcast messages.
-	chat.client.broadcastMessage = function (profileId, message) {
+		var hub = $.connection.danceHub;
 
-		$scope.$apply(function() {
-			test.model.push({ profileId: profileId, message: message });
+		hub.client.update = function (ring) {
+
+			$scope.$apply(function () {
+				viewModel.ring = ring;
+			});
+		};
+
+		viewModel.updateStatus = function(e) {
+			e.preventDefault();
+
+			viewModel.updating = true;
+
+			viewModel.dancer.Status = viewModel.statusText;
+
+			hub.server.update(viewModel.dancer).done(function () {
+
+				$scope.$apply(function() {
+					viewModel.updating = false;
+					viewModel.statusText = '';
+				});
+			});
+		};
+
+		$.connection.hub.start().done(function () {
+
+			hub.server.enter().done(function (dancer) {
+
+				$scope.$apply(function () {
+					viewModel.dancer = dancer;
+					viewModel.connected = true;
+				});
+			});
 		});
-	};
 
-	// Start the connection.
-	$.connection.hub.start().done(function () {
-		test.ready = true;
-	});
-
-	test.send = function(e) {
-		e.preventDefault();
-
-		chat.server.send(test.value);
-
-		test.value = '';
-	};
-
-	return test;
-}]);
+		return viewModel;
+	}])
+;

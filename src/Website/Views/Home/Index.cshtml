@@ -1,20 +1,26 @@
 ﻿@{
-    ViewBag.Title = "Start chatting";
+    ViewBag.Title = "Dancers Hall";
 }
 
 <h2>@ViewBag.Title</h2>
 
-<div data-ng-controller="TestController as test" class="ng-cloak">
 
-	<form data-ng-submit="test.send($event)">
-		<input type="text" data-ng-model="test.value" />
-		<button type="submit">Send</button>
-	</form>
-
-	<ul>
-		<li data-ng-repeat="item in test.model">
-			<img data-ng-src="http://graph.facebook.com/{{item.profileId}}/picture"/> {{item.message}}
-		</li>
-	</ul>
-
+<div data-ng-controller="DancerController as viewModel" data-ng-cloak="">
+	
+	<div data-ng-if="viewModel.connected">
+		
+		<form data-ng-submit="viewModel.updateStatus($event)">
+			<img data-ng-src="http://graph.facebook.com/{{viewModel.dancer.Id}}/picture" />
+			<input type="text" data-ng-model="viewModel.statusText" placeholder="Update your status..." />
+			<button type="submit" data-ng-disabled="viewModel.updating">Update status</button>
+		</form>
+		<hr />
+		
+		<h3>Online dancers</h3>
+		<ul>
+			<li data-ng-repeat="dancer in viewModel.ring.Dancers">
+				<img data-ng-src="http://graph.facebook.com/{{dancer.Id}}/picture" /> {{dancer.Status}}
+			</li>
+		</ul>
+	</div>
 </div>
