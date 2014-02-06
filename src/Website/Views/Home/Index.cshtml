@@ -17,26 +17,32 @@
 				
 		<div class="row">
 			<div class="col-xs-12 text-center">
-				<button type="button" class="btn btn-lg" data-ng-disabled="viewModel.updating || viewModel.dancer.LocationY == 0" data-ng-click="viewModel.move('Y', -1, $event)">Up</button>
+				<button type="button" class="btn btn-lg btn-success" data-ng-disabled="viewModel.updating || viewModel.dancer.LocationY == 0" data-ng-click="viewModel.move('Y', -1, $event)">Up</button>
 			</div>
 		</div>
 		
 		<div class="row">
 			<div class="col-xs-5 text-right">
-				<button type="button" class="btn btn-lg" data-ng-disabled="viewModel.updating || viewModel.dancer.LocationX == 0" data-ng-click="viewModel.move('X', -1, $event)">Left</button>	
+				<button type="button" class="btn btn-lg btn-success" data-ng-disabled="viewModel.updating || viewModel.dancer.LocationX == 0" data-ng-click="viewModel.move('X', -1, $event)">Left</button>	
 			</div>
 			<div class="col-xs-2">
 				<br /><br />
 			</div>
 			<div class="col-xs-5 text-left">
-				<button type="button" class="btn btn-lg" data-ng-disabled="viewModel.updating" data-ng-click="viewModel.move('X', 1, $event)">Right</button>	
+				<button type="button" class="btn btn-lg btn-success" data-ng-disabled="viewModel.updating" data-ng-click="viewModel.move('X', 1, $event)">Right</button>	
 			</div>
 		</div>
 		
 		<div class="row">
 			<div class="col-xs-12 text-center">
-				<button type="button" class="btn btn-lg" data-ng-disabled="viewModel.updating" data-ng-click="viewModel.move('Y', 1, $event)">Down</button>
+				<button type="button" class="btn btn-lg btn-success" data-ng-disabled="viewModel.updating" data-ng-click="viewModel.move('Y', 1, $event)">Down</button>
 			</div>
+		</div>
+		
+		<br /><br />
+		<div class="row text-center">
+			<button type="button" class="btn btn-sm btn-primary" data-ng-disabled="viewModel.updating" data-ng-click="viewModel.move('Y', 1, $event)">Rotate</button>
+			<button type="button" class="btn btn-sm btn-primary" data-ng-disabled="viewModel.updating" data-ng-click="viewModel.move('Y', 1, $event)">Flip</button>
 		</div>
 		
 	</div>
