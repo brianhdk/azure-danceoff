@@ -10,35 +10,54 @@ namespace Website.Hubs
 	public class DanceHub : Hub
 	{
 		private static readonly DanceRing Ring = new DanceRing();
+		private static readonly object SyncRoot = new object();
 
 		public Dancer Enter()
 		{
-			Dancer dancer = Ring.Enter(User, ConnectionId);
+			bool newDancer;
+			Dancer dancer;
 
-			UpdateClients();
+			lock (SyncRoot)
+			{
+				dancer = Ring.Enter(User, ConnectionId, out newDancer);
+			}
 
+			if (newDancer)
+				Owner(o => o.Add(dancer));
+			
 			return dancer;
+		}
+
+		private void Owner(Action<dynamic> owner)
+		{
+			if (Ring.Owner != null)
+				owner(Clients.Clients(Ring.Owner.Connections.ToList()));
+		}
+
+		[Authorize(Users = Models.User.Brianh)]
+		public Dancer[] Manage()
+		{
+			Dancer dancer = Enter();
+
+			Ring.Owner = dancer;
+
+			return Ring.Dancers;
 		}
 
 		public void Update(Dancer dancer)
 		{
-			Ring.Update(dancer);
+			Ring.Update(ref dancer);
 
-			UpdateClients();
+			Owner(o => o.Update(dancer));
 		}
 
 		public override Task OnDisconnected()
 		{
-			Ring.Leave(ConnectionId);
-
-			UpdateClients();
+			Dancer dancer;
+			if (Ring.Leave(ConnectionId, out dancer))
+				Owner(o => o.Remove(dancer));
 
 			return base.OnDisconnected();
-		}
-
-		private void UpdateClients()
-		{
-			Clients.All.Update(Ring);
 		}
 
 		private string User
@@ -63,13 +82,17 @@ namespace Website.Hubs
 
 		public Dancer[] Dancers
 		{
-			get { return _dancers.Values.ToArray(); }
+			get { return _dancers.Values.Where(x => x.HasAnyConnections()).ToArray(); }
 		}
 
-		public Dancer Enter(string id, string connectionId)
+		public Dancer Owner { get; set; }
+
+		public Dancer Enter(string id, string connectionId, out bool newDancer)
 		{
 			Dancer dancer;
-			if (!_dancers.TryGetValue(id, out dancer))
+			newDancer = !_dancers.TryGetValue(id, out dancer) || !dancer.HasAnyConnections();
+
+			if (dancer == null)
 			{
 				dancer = new Dancer(id);
 				_dancers.Add(id, dancer);
@@ -80,31 +103,51 @@ namespace Website.Hubs
 			return dancer;
 		}
 
-		public void Update(Dancer dancer)
+		public void Update(ref Dancer dancer)
 		{
-			Dancer actualDancer;
-			if (_dancers.TryGetValue(dancer.Id, out actualDancer))
-				actualDancer.Update(dancer);
+			if (dancer == null) throw new ArgumentNullException("dancer");
+
+			Dancer actualDancer = ActualDancer(dancer);
+
+			actualDancer.Update(dancer);
+
+			dancer = actualDancer;
 		}
 
-		public void Leave(string connectionId)
+		private Dancer ActualDancer(Dancer dancer)
 		{
-			Dancer dancer = _dancers.Values.SingleOrDefault(x => x.HasConnection(connectionId));
+			if (!_dancers.TryGetValue(dancer.Id, out dancer))
+				throw new InvalidOperationException("Dancer not found.");
+
+			return dancer;
+		}
+
+		public bool Leave(string connectionId, out Dancer dancer)
+		{
+			dancer = _dancers.Values.SingleOrDefault(x => x.HasConnection(connectionId));
 
 			if (dancer != null)
 			{
 				dancer.Disconnect(connectionId);
 
-				if (!dancer.IsAlive())
-					_dancers.Remove(dancer.Id);
+				// Same dancer can be connected from multiple devices/sessions at the same time
+				// se we don't remove the dancer before the last connection has lost
+				if (!dancer.HasAnyConnections())
+				{
+					if (dancer == Owner)
+						Owner = null;
+
+					return true;
+				}
 			}
+
+			return false;
 		}
 	}
 
 	public class Dancer
 	{
 		private readonly HashSet<string> _connections;
-		private DateTimeOffset _lastPulse;
   
 		public Dancer(string id)
 		{
@@ -114,10 +157,17 @@ namespace Website.Hubs
 
 		public string Id { get; private set; }
 		public string Status { get; set; }
+		public ushort LocationX { get; set; }
+		public ushort LocationY { get; set; }
 
 		public void Connect(string connectionId)
 		{
 			_connections.Add(connectionId);
+		}
+
+		public IEnumerable<string> Connections
+		{
+			get { return _connections; }
 		}
 
 		public bool HasConnection(string connectionId)
@@ -130,7 +180,7 @@ namespace Website.Hubs
 			_connections.Remove(connectionId);
 		}
 
-		public bool IsAlive()
+		public bool HasAnyConnections()
 		{
 			return _connections.Count > 0;
 		}
@@ -138,6 +188,8 @@ namespace Website.Hubs
 		public void Update(Dancer dancer)
 		{
 			Status = dancer.Status;
+			LocationX = dancer.LocationX;
+			LocationY = dancer.LocationY;
 		}
 	}
 }

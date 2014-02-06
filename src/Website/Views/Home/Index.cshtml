@@ -2,25 +2,19 @@
     ViewBag.Title = "Dancers Hall";
 }
 
-<h2>@ViewBag.Title</h2>
-
-
 <div data-ng-controller="DancerController as viewModel" data-ng-cloak="">
-	
 	<div data-ng-if="viewModel.connected">
-		
-		<form data-ng-submit="viewModel.updateStatus($event)">
-			<img data-ng-src="http://graph.facebook.com/{{viewModel.dancer.Id}}/picture" />
-			<input type="text" data-ng-model="viewModel.statusText" placeholder="Update your status..." />
-			<button type="submit" data-ng-disabled="viewModel.updating">Update status</button>
+		<form data-ng-submit="viewModel.update($event)">
+			<img data-ng-src="http://graph.facebook.com/{{viewModel.dancer.Id}}/picture?type=normal" class="img-circle" />
+			<input type="text" data-ng-model="viewModel.dancer.Status" placeholder="Status" />
+			<button type="submit" data-ng-disabled="viewModel.updating">Update</button>
 		</form>
-		<hr />
 		
-		<h3>Online dancers</h3>
-		<ul>
-			<li data-ng-repeat="dancer in viewModel.ring.Dancers">
-				<img data-ng-src="http://graph.facebook.com/{{dancer.Id}}/picture" /> {{dancer.Status}}
-			</li>
-		</ul>
+		<fieldset>
+			<button type="button" class="btn" data-ng-disabled="viewModel.dancer.Location.Y == 0" data-ng-click="viewModel.move('Y', -1, $event)">Up</button>
+			<button type="button" class="btn" data-ng-disabled="viewModel.dancer.Location.X == 0" data-ng-click="viewModel.move('X', -1, $event)">Left</button>
+			<button type="button" class="btn" data-ng-click="viewModel.move('Y', 1, $event)">Down</button>
+			<button type="button" class="btn" data-ng-click="viewModel.move('X', 1, $event)">Right</button>
+		</fieldset>
 	</div>
 </div>

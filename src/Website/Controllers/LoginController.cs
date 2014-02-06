@@ -11,9 +11,9 @@ namespace Website.Controllers
 {
     public class LoginController : Controller
     {
-	    private readonly UserManager<User> _manager = new UserManager<User>(new NonStoringUserStore()); 
-
-	    [AllowAnonymous]
+	    private readonly UserManager<User> _userManager = new UserManager<User>(new NonStoringUserStore());
+			
+		[AllowAnonymous]
         public ActionResult Index(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
@@ -38,7 +38,7 @@ namespace Website.Controllers
 
 			AuthenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie);
 
-			ClaimsIdentity identity = await _manager.CreateIdentityAsync(new User(loginInfo), DefaultAuthenticationTypes.ApplicationCookie);
+			ClaimsIdentity identity = await _userManager.CreateIdentityAsync(new User(loginInfo), DefaultAuthenticationTypes.ApplicationCookie);
 
 	        AuthenticationManager.SignIn(new AuthenticationProperties(), identity);
 

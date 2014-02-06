@@ -18,13 +18,15 @@ namespace Website
 
 	        bundles.Add(new ScriptBundle("~/bundles/angularjs").Include(
 				"~/Scripts/angular.js",
-		        "~/Scripts/angular-animate.js", 
+		        "~/Scripts/angular-animate.js",
+ 				"~/Scripts/lodash-2.4.1.js",
 				"~/Scripts/application/app.js"));
 
-			bundles.Add(new StyleBundle("~/Content/css").Include(
-				"~/Content/bootstrap.css", 
-				"~/Content/angular.css",
-				"~/Content/site.css"));
+	        bundles.Add(new StyleBundle("~/Content/css").Include(
+		        "~/Content/bootstrap.css",
+		        "~/Content/angular.css",
+		        "~/Content/site.css",
+		        "~/Content/danceoff.css"));
         }
     }
 }
