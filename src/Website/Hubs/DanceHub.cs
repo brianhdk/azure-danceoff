@@ -35,6 +35,16 @@ namespace Website.Hubs
 			return Ring.Dancers;
 		}
 
+		[Authorize(Users = Models.User.Brianh)]
+		public void Restart()
+		{
+			foreach (Dancer dancer in Ring.Dancers)
+			{
+				dancer.Restart();
+				Update(dancer);
+			}
+		}
+
 		public void Update(Dancer dancer)
 		{
 			Ring.Update(ref dancer);

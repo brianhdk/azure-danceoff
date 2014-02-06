@@ -1,8 +1,27 @@
-﻿<div data-ng-controller="DanceRingController as viewModel" data-ng-cloak="">
-	<ul class="dancers">
-		<li class="dancer" data-ng-repeat="dancer in viewModel.dancers" style="top: {{dancer.LocationY}}px; left: {{dancer.LocationX}}px">
-			<img data-ng-src="http://graph.facebook.com/{{dancer.Id}}/picture?type=large" class="img-circle {{dancer.Animation}}" /><br />
-			<p data-ng-if="dancer.Status">{{dancer.Status}}</p>
-		</li>
-	</ul>
+﻿@{
+	ViewBag.Title = "Dance Ring";
+}
+
+<div data-ng-controller="DanceRingController as viewModel" data-ng-cloak="">
+	
+	<div data-ng-if="viewModel.connected">
+		
+		<div class="circle"></div>
+		
+		<ul class="dancers">
+			<li class="dancer" data-ng-repeat="dancer in viewModel.dancers" style="top: {{dancer.LocationY}}px; left: {{dancer.LocationX}}px">
+				<img data-ng-src="http://graph.facebook.com/{{dancer.Id}}/picture?type=large" class="img-circle {{dancer.Animation}}" /><br />
+				<p data-ng-if="dancer.Status">{{dancer.Status}}</p>
+			</li>
+		</ul>
+		
+		<div class="btn-group pull-right" style="z-index:99999;">
+			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+				Admin <span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu" role="menu">
+				<li><a href="#" data-ng-click="viewModel.restart($event)">Restart</a></li>
+			</ul>
+		</div>
+	</div>
 </div>

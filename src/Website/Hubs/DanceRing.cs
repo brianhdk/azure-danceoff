@@ -37,23 +37,24 @@ namespace Website.Hubs
 			return dancer;
 		}
 
-		public void Update(ref Dancer dancer)
+		public void Update(ref Dancer remote)
 		{
-			if (dancer == null) throw new ArgumentNullException("dancer");
+			if (remote == null) throw new ArgumentNullException("remote");
 
-			Dancer actualDancer = ActualDancer(dancer);
+			Dancer local = GetLocalOf(remote);
 
-			actualDancer.Update(dancer);
+			local.Update(remote);
 
-			dancer = actualDancer;
+			remote = local;
 		}
 
-		private Dancer ActualDancer(Dancer dancer)
+		private Dancer GetLocalOf(Dancer remote)
 		{
-			if (!_dancers.TryGetValue(dancer.Id, out dancer))
+			Dancer local;
+			if (!_dancers.TryGetValue(remote.Id, out local))
 				throw new InvalidOperationException("Dancer not found.");
 
-			return dancer;
+			return local;
 		}
 
 		public bool Leave(string connectionId, out Dancer dancer)

@@ -60,6 +60,14 @@
 
 		viewModel.dancers = [];
 
+		viewModel.restart = function(e) {
+
+			e.preventDefault();
+
+			hub.server.restart().done(function () {
+			});
+		};
+
 		var dancerByIndex = function (dancer) {
 
 			var index = _.findIndex(viewModel.dancers, function (existingDancer) {

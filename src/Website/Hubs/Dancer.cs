@@ -13,14 +13,22 @@ namespace Website.Hubs
 		public ushort LocationY { get; set; }
 		public string Animation { get; set; }
 
-		public void Update(Dancer dancer)
+		public void Update(Dancer remote)
 		{
-			Status = dancer.Status;
+			Status = remote.Status;
 
-			LocationX = dancer.LocationX;
-			LocationY = dancer.LocationY;
+			LocationX = remote.LocationX;
+			LocationY = remote.LocationY;
 
-			Animation = dancer.Animation;
+			Animation = remote.Animation;
+		}
+
+		public void Restart()
+		{
+			LocationX = default(ushort);
+			LocationY = default(ushort);
+
+			Animation = null;
 		}
 	}
 }

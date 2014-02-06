@@ -13,7 +13,7 @@
 				<button type="submit" class="hidden" data-ng-disabled="viewModel.updating">Update</button>
 			</form>
 		</div>
-		<br />
+		<br /><br />
 				
 		<div class="row">
 			<div class="col-xs-12 text-center">
@@ -49,18 +49,33 @@
 		
 		<br /><br />
 		<div class="row text-center">
-			<button type="button" class="btn btn-lg btn-primary" data-ng-disabled="viewModel.updating || viewModel.dancer.Animation=='rotator'" data-ng-click="viewModel.animate('rotator', $event)">
-				<span class="glyphicon glyphicon-refresh"></span> Rotate
-			</button>
+			
+			<div class="btn-group btn-group-lg">
+				<button type="button" class="btn btn-primary" data-ng-disabled="viewModel.updating || viewModel.dancer.Animation=='rotator'" data-ng-click="viewModel.animate('rotator', $event)">
+					<span class="glyphicon glyphicon-refresh"></span> Rotate
+				</button>
 
-			<button type="button" class="btn btn-lg btn-primary" data-ng-disabled="viewModel.updating || viewModel.dancer.Animation=='jump'" data-ng-click="viewModel.animate('jump', $event)">
-				<span class="glyphicon glyphicon-resize-vertical"></span> Jump
-			</button>
+				<button type="button" class="btn btn-primary" data-ng-disabled="viewModel.updating || viewModel.dancer.Animation=='jump'" data-ng-click="viewModel.animate('jump', $event)">
+					<span class="glyphicon glyphicon-resize-vertical"></span> Jump
+				</button>
+			</div>
+			
+			<div class="btn-group btn-group-lg">
+				<button type="button" class="btn btn-danger" data-ng-disabled="viewModel.updating || !viewModel.dancer.Animation.length" data-ng-click="viewModel.animate('', $event)">
+					<span class="glyphicon glyphicon-stop"></span> Stop
+				</button>
+			</div>
 
-			<button type="button" class="btn btn-lg btn-danger" data-ng-disabled="viewModel.updating || !viewModel.dancer.Animation.length" data-ng-click="viewModel.animate('', $event)">
-				<span class="glyphicon glyphicon-stop"></span> Stop
-			</button>
 		</div>
 		
+	</div>
+	
+	<br />
+	<div class="row">
+		@using (Html.BeginForm("LogOff", "Login"))
+		{
+			@Html.AntiForgeryToken()
+			<button type="submit" class="btn btn-sm btn-link">Sign Out</button>
+		}
 	</div>
 </div>
