@@ -13,36 +13,53 @@
 				<button type="submit" class="hidden" data-ng-disabled="viewModel.updating">Update</button>
 			</form>
 		</div>
-		<br /><br />
+		<br />
 				
 		<div class="row">
 			<div class="col-xs-12 text-center">
-				<button type="button" class="btn btn-lg btn-success" data-ng-disabled="viewModel.updating || viewModel.dancer.LocationY == 0" data-ng-click="viewModel.move('Y', -1, $event)">Up</button>
+				<button type="button" class="btn btn-lg btn-success" data-ng-disabled="viewModel.updating || viewModel.dancer.LocationY == 0" data-ng-click="viewModel.move('Y', -1, $event)">
+					<span class="glyphicon glyphicon-arrow-up"></span>
+				</button>
 			</div>
 		</div>
 		
 		<div class="row">
 			<div class="col-xs-5 text-right">
-				<button type="button" class="btn btn-lg btn-success" data-ng-disabled="viewModel.updating || viewModel.dancer.LocationX == 0" data-ng-click="viewModel.move('X', -1, $event)">Left</button>	
+				<button type="button" class="btn btn-lg btn-success" data-ng-disabled="viewModel.updating || viewModel.dancer.LocationX == 0" data-ng-click="viewModel.move('X', -1, $event)">
+					<span class="glyphicon glyphicon-arrow-left"></span>
+				</button>	
 			</div>
 			<div class="col-xs-2">
 				<br /><br />
 			</div>
 			<div class="col-xs-5 text-left">
-				<button type="button" class="btn btn-lg btn-success" data-ng-disabled="viewModel.updating" data-ng-click="viewModel.move('X', 1, $event)">Right</button>	
+				<button type="button" class="btn btn-lg btn-success" data-ng-disabled="viewModel.updating" data-ng-click="viewModel.move('X', 1, $event)">
+					<span class="glyphicon glyphicon-arrow-right"></span>
+				</button>	
 			</div>
 		</div>
 		
 		<div class="row">
 			<div class="col-xs-12 text-center">
-				<button type="button" class="btn btn-lg btn-success" data-ng-disabled="viewModel.updating" data-ng-click="viewModel.move('Y', 1, $event)">Down</button>
+				<button type="button" class="btn btn-lg btn-success" data-ng-disabled="viewModel.updating" data-ng-click="viewModel.move('Y', 1, $event)">
+					<span class="glyphicon glyphicon-arrow-down"></span>
+				</button>
 			</div>
 		</div>
 		
 		<br /><br />
 		<div class="row text-center">
-			<button type="button" class="btn btn-sm btn-primary" data-ng-disabled="viewModel.updating" data-ng-click="viewModel.move('Y', 1, $event)">Rotate</button>
-			<button type="button" class="btn btn-sm btn-primary" data-ng-disabled="viewModel.updating" data-ng-click="viewModel.move('Y', 1, $event)">Flip</button>
+			<button type="button" class="btn btn-lg btn-primary" data-ng-disabled="viewModel.updating || viewModel.dancer.Animation=='rotator'" data-ng-click="viewModel.animate('rotator', $event)">
+				<span class="glyphicon glyphicon-refresh"></span> Rotate
+			</button>
+
+			<button type="button" class="btn btn-lg btn-primary" data-ng-disabled="viewModel.updating || viewModel.dancer.Animation=='jump'" data-ng-click="viewModel.animate('jump', $event)">
+				<span class="glyphicon glyphicon-resize-vertical"></span> Jump
+			</button>
+
+			<button type="button" class="btn btn-lg btn-danger" data-ng-disabled="viewModel.updating || !viewModel.dancer.Animation.length" data-ng-click="viewModel.animate('', $event)">
+				<span class="glyphicon glyphicon-stop"></span> Stop
+			</button>
 		</div>
 		
 	</div>

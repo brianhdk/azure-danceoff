@@ -1,20 +1,27 @@
 ﻿angular
 	.module("app", ["ngAnimate"])
 
-	.controller("DancerController", ["$scope", function($scope) {
+	.controller("DancerController", ["$scope", function ($scope) {
 
 		var viewModel = this;
 
 		var hub = $.connection.danceHub;
 
-		viewModel.move = function(axis, factor, e) {
+		viewModel.move = function (axis, factor, e) {
 			e.preventDefault();
 
 			viewModel.dancer['Location' + axis] += factor * 25;
 			viewModel.update(e);
 		};
 
-		viewModel.update = function(e) {
+		viewModel.animate = function(name, e) {
+			e.preventDefault();
+
+			viewModel.dancer.Animation = name;
+			viewModel.update(e);
+		};
+
+		viewModel.update = function (e) {
 			e.preventDefault();
 
 			viewModel.updating = true;
