@@ -27,8 +27,10 @@
 			});
 		};
 
-		// has to be there for the OnDisconnected event to be fired
-		hub.client.disconnected = function() {
+		hub.client.update = function(dancer) {
+			$scope.$apply(function () {
+				viewModel.dancer = dancer;
+			});
 		};
 
 		$.connection.hub.start().done(function () {

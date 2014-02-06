@@ -4,17 +4,40 @@
 
 <div data-ng-controller="DancerController as viewModel" data-ng-cloak="">
 	<div data-ng-if="viewModel.connected">
-		<form data-ng-submit="viewModel.update($event)">
-			<img data-ng-src="http://graph.facebook.com/{{viewModel.dancer.Id}}/picture?type=normal" class="img-circle" />
-			<input type="text" data-ng-model="viewModel.dancer.Status" placeholder="Status" />
-			<button type="submit" data-ng-disabled="viewModel.updating">Update</button>
-		</form>
 		
-		<fieldset>
-			<button type="button" class="btn" data-ng-disabled="viewModel.dancer.Location.Y == 0" data-ng-click="viewModel.move('Y', -1, $event)">Up</button>
-			<button type="button" class="btn" data-ng-disabled="viewModel.dancer.Location.X == 0" data-ng-click="viewModel.move('X', -1, $event)">Left</button>
-			<button type="button" class="btn" data-ng-click="viewModel.move('Y', 1, $event)">Down</button>
-			<button type="button" class="btn" data-ng-click="viewModel.move('X', 1, $event)">Right</button>
-		</fieldset>
+		<div class="row text-center">
+			<img data-ng-src="http://graph.facebook.com/{{viewModel.dancer.Id}}/picture?type=large" class="img-circle" />
+			<br /><br />
+			<form class="form-inline" data-ng-submit="viewModel.update($event)">
+				<input type="text" class="form-control text-center center-block input-lg" data-ng-model="viewModel.dancer.Status" placeholder="Say something..." maxlength="90" />
+				<button type="submit" class="hidden" data-ng-disabled="viewModel.updating">Update</button>
+			</form>
+		</div>
+		<br /><br />
+				
+		<div class="row">
+			<div class="col-xs-12 text-center">
+				<button type="button" class="btn btn-lg" data-ng-disabled="viewModel.updating || viewModel.dancer.LocationY == 0" data-ng-click="viewModel.move('Y', -1, $event)">Up</button>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-xs-5 text-right">
+				<button type="button" class="btn btn-lg" data-ng-disabled="viewModel.updating || viewModel.dancer.LocationX == 0" data-ng-click="viewModel.move('X', -1, $event)">Left</button>	
+			</div>
+			<div class="col-xs-2">
+				<br /><br />
+			</div>
+			<div class="col-xs-5 text-left">
+				<button type="button" class="btn btn-lg" data-ng-disabled="viewModel.updating" data-ng-click="viewModel.move('X', 1, $event)">Right</button>	
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-xs-12 text-center">
+				<button type="button" class="btn btn-lg" data-ng-disabled="viewModel.updating" data-ng-click="viewModel.move('Y', 1, $event)">Down</button>
+			</div>
+		</div>
+		
 	</div>
 </div>

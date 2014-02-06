@@ -48,6 +48,8 @@ namespace Website.Hubs
 		{
 			Ring.Update(ref dancer);
 
+			Clients.Clients(dancer.Connections.ToList()).Update(dancer);
+
 			Owner(o => o.Update(dancer));
 		}
 
