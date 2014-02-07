@@ -14,6 +14,13 @@
 			viewModel.update(e);
 		};
 
+		viewModel.incrementZ = function (e) {
+			e.preventDefault();
+
+			viewModel.dancer.LocationZ += 1;
+			viewModel.update(e);
+		};
+
 		viewModel.animate = function(name, e) {
 			e.preventDefault();
 

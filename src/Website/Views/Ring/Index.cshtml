@@ -9,7 +9,7 @@
 		<div class="circle"></div>
 		
 		<ul class="dancers">
-			<li class="dancer" data-ng-repeat="dancer in viewModel.dancers" style="top: {{dancer.LocationY}}px; left: {{dancer.LocationX}}px">
+			<li class="dancer" data-ng-repeat="dancer in viewModel.dancers" style="top: {{dancer.LocationY}}px; left: {{dancer.LocationX}}px;z-index: {{dancer.LocationZ}};">
 				<img data-ng-src="http://graph.facebook.com/{{dancer.Id}}/picture?type=large" class="img-circle {{dancer.Animation}}" /><br />
 				<p data-ng-if="dancer.Status">{{dancer.Status}}</p>
 			</li>

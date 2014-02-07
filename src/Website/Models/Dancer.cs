@@ -13,6 +13,7 @@ namespace Website.Models
 		public string Status { get; set; }
 		public ushort LocationX { get; set; }
 		public ushort LocationY { get; set; }
+		public ushort LocationZ { get; set; }
 		public string Animation { get; set; }
 
 		public void Update(Dancer remote)
@@ -26,6 +27,7 @@ namespace Website.Models
 
 			LocationX = remote.LocationX;
 			LocationY = remote.LocationY;
+			LocationZ = remote.LocationZ;
 
 			Animation = remote.Animation;
 		}

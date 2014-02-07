@@ -6,7 +6,7 @@
 	<div data-ng-if="viewModel.connected">
 		
 		<div class="row text-center">
-			<img data-ng-src="http://graph.facebook.com/{{viewModel.dancer.Id}}/picture?type=large" class="img-circle" />
+			<img data-ng-src="http://graph.facebook.com/{{viewModel.dancer.Id}}/picture?type=large" class="img-circle" data-ng-click="viewModel.incrementZ($event);" />
 			<br /><br />
 			<form class="form-inline" data-ng-submit="viewModel.update($event)">
 				<input type="text" class="form-control text-center center-block input-lg" data-ng-model="viewModel.dancer.Status" placeholder="Say something..." maxlength="90" />
