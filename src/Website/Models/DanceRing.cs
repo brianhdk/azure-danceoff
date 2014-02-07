@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Website.Hubs
+namespace Website.Models
 {
 	public class DanceRing
 	{
@@ -37,22 +37,24 @@ namespace Website.Hubs
 			return dancer;
 		}
 
-		public void Update(ref Dancer remote)
+		public void Update(string id, ref Dancer remote)
 		{
 			if (remote == null) throw new ArgumentNullException("remote");
 
-			Dancer local = GetLocalOf(remote);
+			Dancer local = GetLocalOf(id);
 
 			local.Update(remote);
-
+			
 			remote = local;
 		}
 
-		private Dancer GetLocalOf(Dancer remote)
+		private Dancer GetLocalOf(string id)
 		{
+			if (String.IsNullOrWhiteSpace(id)) throw new ArgumentException("Value cannot be null or empty.", "id");
+
 			Dancer local;
-			if (!_dancers.TryGetValue(remote.Id, out local))
-				throw new InvalidOperationException("Dancer not found.");
+			if (!_dancers.TryGetValue(id, out local))
+				throw new InvalidOperationException(String.Format("Dancer with ID '{0}' not found.", id));
 
 			return local;
 		}

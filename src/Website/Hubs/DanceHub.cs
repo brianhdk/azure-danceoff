@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR;
+using Website.Models;
 
 namespace Website.Hubs
 {
@@ -47,7 +48,7 @@ namespace Website.Hubs
 
 		public void Update(Dancer dancer)
 		{
-			Ring.Update(ref dancer);
+			Ring.Update(User, ref dancer);
 
 			Dancer(dancer).Update(dancer);
 

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Website.Hubs
+namespace Website.Models
 {
 	public abstract class Connectable
 	{

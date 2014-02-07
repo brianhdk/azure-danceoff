@@ -1,4 +1,4 @@
-namespace Website.Hubs
+namespace Website.Models
 {
 	public class Owner : Connectable
 	{

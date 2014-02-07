@@ -170,11 +170,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Hubs\Connectable.cs" />
+    <Compile Include="Models\Connectable.cs" />
     <Compile Include="Hubs\DanceHub.cs" />
-    <Compile Include="Hubs\Dancer.cs" />
-    <Compile Include="Hubs\DanceRing.cs" />
-    <Compile Include="Hubs\Owner.cs" />
+    <Compile Include="Models\Dancer.cs" />
+    <Compile Include="Models\DanceRing.cs" />
+    <Compile Include="Models\Owner.cs" />
     <Compile Include="Models\NonStoringUserStore.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

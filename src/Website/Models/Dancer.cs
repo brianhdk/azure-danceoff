@@ -1,4 +1,6 @@
-namespace Website.Hubs
+using System;
+
+namespace Website.Models
 {
 	public class Dancer : Connectable
 	{
@@ -15,6 +17,11 @@ namespace Website.Hubs
 
 		public void Update(Dancer remote)
 		{
+			if (remote == null) throw new ArgumentNullException("remote");
+
+			if (!String.Equals(Id, remote.Id))
+				throw new InvalidOperationException("ID mismatch.");
+
 			Status = remote.Status;
 
 			LocationX = remote.LocationX;
